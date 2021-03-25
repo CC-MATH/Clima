@@ -1,0 +1,41 @@
+
+name: Android-CI
+
+# Controla cuando se ejecutará la acción.
+on:
+  # Activa el 'workflow' cuando ocurren eventos 'pull requests' sólo en la rama 'master'. 
+  pull_request:
+    branches: [ master ]
+
+  # Permite ejecutar el 'workflow' manualmente desde la pestaña 'Actions'.
+  workflow_dispatch:
+
+# Un 'workflow' se compone de uno o más 'jobs' que se ejecutan secuencialmente o en paralelo. 
+# jobs = especificación de ambiente y conjunto de tareas.
+jobs:
+  # Este 'workflow' contiene un sólo job llamado "build".
+  build:
+    # A continuación se especifican los 'runners'. 
+    # Existen los 'custom runners', por ejemplo para aplicaciones externas como dockers o los 'github-hosted runners' que provee github.    
+    runs-on: ubuntu-latest #GitHub runner(ambiente), por default ubuntu-latest contine, entre otras, android-SDK
+
+    # 'Steps' representa una secuencia de tareas que se ejecutan como parte del 'job'.
+    steps:
+      # Hace un 'check-out' del repositorio (dado por $GITHUB_WORKSPACE), para que el 'job' pueda acceder.
+      - uses: actions/checkout@v2 #GitHub actions tooling
+
+      # Configurar JDK para construir el proyecto de Android
+      - name: Set-Up JDK #El nombre que tu elijas
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      # Ejecuta pruebas de Android
+      - name: Run-Tests
+        run: ./gradlew test
+        
+      # Construye el proyecto
+      - name: Build-Project
+        run: ./gradlew assemble
+
+
