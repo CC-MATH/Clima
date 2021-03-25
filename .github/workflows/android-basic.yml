@@ -33,6 +33,10 @@ jobs:
         with:
           java-version: 1.8
 
+      # Permite ejecutar ./gradlew
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
       # Ejecuta pruebas de Android
       - name: Run-Tests
         run: ./gradlew test
