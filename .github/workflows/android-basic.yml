@@ -3,7 +3,10 @@ name: Android-CI
 
 # Controla cuando se ejecutará la acción.
 on:
-  # Activa el 'workflow' cuando ocurren eventos 'pull requests' sólo en la rama 'master'. 
+  # Activa el 'workflow' cuando ocurren eventos 'push y pull requests' sólo en la rama 'master'. 
+  push:
+    branches: [ master ]
+  
   pull_request:
     branches: [ master ]
 
